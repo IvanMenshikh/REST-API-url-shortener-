@@ -14,11 +14,11 @@ import (
 // env-required:"true" - Если поле не задано в yaml, крашим запуск приложения.
 
 type Config struct {
-	Env         string `yaml:"env" env-default:"dev"`
-	PostgresCfg `yaml:"storage_path" env-required:"true"`
-	Sqlite      `yaml:"sqlite" env-required:"true"`
-	HTTPServer  `yaml:"http_server"`
-	DBType      string `yaml:"db_type" env-required:"true"`
+	Env        string      `yaml:"env" env-default:"dev"`
+	Postgres   PostgresCfg `yaml:"postgres" env-required:"true"`
+	Sqlite     SqliteCfg   `yaml:"sqlite" env-required:"true"`
+	HTTPServer HTTPServer  `yaml:"http_server"`
+	DBType     string      `yaml:"db_type" env-required:"true"`
 }
 
 type HTTPServer struct {
@@ -27,16 +27,16 @@ type HTTPServer struct {
 	IdleTimeout time.Duration `yaml:"idle_timeout" env-default:"60s"`
 }
 
-type Sqlite struct {
+type SqliteCfg struct {
 	Path string `yaml:"storage_path" env-required:"true"`
 }
 type PostgresCfg struct {
-	Host     string `yaml:"host" env-default:"localhost"`
-	Port     int    `yaml:"port" env-default:"5432"`
-	User     string `yaml:"user" env-default:"postgres"`
-	Password string `yaml:"password" env-default:""` // чувствительные данные
-	DBName   string `yaml:"dbname" env-default:"url-shortener"`
-	SSLMode  string `yaml:"" env-default:"disable"`
+	Host     string `yaml:"host" env-required:"true"`
+	Port     int    `yaml:"port" env-required:"true"`
+	User     string `yaml:"user" env-required:"true"`
+	Password string `yaml:"password" env-required:"true"`
+	DBName   string `yaml:"dbname" env-required:"true"`
+	SSLMode  string `yaml:"sslmode" env-default:"disable"`
 }
 
 // Функция, которая прочитает файл с конфигом и заполнит объект Config.

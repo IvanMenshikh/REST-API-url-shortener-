@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"log/slog"
 	"os"
 	"url-shortener/internal/config"
-
+	"url-shortener/internal/storage/postgres"
+	//"url-shortener/internal/storage/sqlite"
 )
 
 const (
@@ -17,15 +17,21 @@ const (
 func main() {
 	// TODO: init config: cleanenv
 	cfg := config.MustLoad()
-	fmt.Printf("%+v\n", cfg)
+	//fmt.Printf("%+v\n", cfg)
 
 	// TODO: init Logger: slog
 	log := setupLogger(cfg.Env)
-	log.Info("Starting URL Shortener service", slog.String("env", cfg.Env))
-	log.Debug("Debug logging enabled")
+	//log.Info("Starting URL Shortener service", slog.String("env", cfg.Env))
+	//log.Debug("Debug logging enabled")
 
 	// TODO: init storage: sqlite
-
+		storage, err := postgres.NewPostgresStorage(cfg.Postgres.Host, cfg.Postgres.Port, cfg.Postgres.User, cfg.Postgres.Password, cfg.Postgres.DBName, cfg.Postgres.SSLMode)
+		if err != nil {
+			log.Error("failed to init storage", slog.Any("error", err))
+			os.Exit(1)
+		}
+		log.Info("Successfully connected to database")
+		_ = storage
 	// TODO: init router: chi, "chi render"
 
 	// TODO: init server

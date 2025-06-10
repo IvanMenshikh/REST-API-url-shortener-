@@ -1,14 +1,14 @@
-env: "prod" # local, dev, prod
+env: "local" # local, dev, prod
 
 sqlite:
-  storage_path: "./storage/sqlite_storage.db"
+  storage_path: "./storage/sqlite.db"
 
 postgres:
   host: "localhost"
   port: 5432
   user: "postgres"
-  password: "" # чувствительные данные
-  dbname: "url-shortener"
+  password: "ivanMENSHIKH150%" # чувствительные данные
+  dbname: "urlShortener"
   sslmode: "disable"
 
 http_server:
