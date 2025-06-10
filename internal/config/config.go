@@ -16,7 +16,9 @@ import (
 type Config struct {
 	Env         string `yaml:"env" env-default:"dev"`
 	PostgresCfg `yaml:"storage_path" env-required:"true"`
+	Sqlite      `yaml:"sqlite" env-required:"true"`
 	HTTPServer  `yaml:"http_server"`
+	DBType      string `yaml:"db_type" env-required:"true"`
 }
 
 type HTTPServer struct {
@@ -25,6 +27,9 @@ type HTTPServer struct {
 	IdleTimeout time.Duration `yaml:"idle_timeout" env-default:"60s"`
 }
 
+type Sqlite struct {
+	Path string `yaml:"storage_path" env-required:"true"`
+}
 type PostgresCfg struct {
 	Host     string `yaml:"host" env-default:"localhost"`
 	Port     int    `yaml:"port" env-default:"5432"`

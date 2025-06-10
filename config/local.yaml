@@ -1,6 +1,9 @@
-env: "local" # local, dev, prod
+env: "prod" # local, dev, prod
 
-postgres: 
+sqlite:
+  storage_path: "./storage/sqlite_storage.db"
+
+postgres:
   host: "localhost"
   port: 5432
   user: "postgres"
@@ -12,3 +15,5 @@ http_server:
   address: "localhost:8081"
   timeout: 4s
   idle_timeout: 60s
+
+db_type: "postgres" # выбрать: sqlite или postgres
