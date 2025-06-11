@@ -4,8 +4,9 @@ import (
 	"log/slog"
 	"os"
 	"url-shortener/internal/config"
-	"url-shortener/internal/storage/postgres"
-	//"url-shortener/internal/storage/sqlite"
+
+	//"url-shortener/internal/storage/postgres"
+	"url-shortener/internal/storage/sqlite"
 )
 
 const (
@@ -25,13 +26,14 @@ func main() {
 	//log.Debug("Debug logging enabled")
 
 	// TODO: init storage: sqlite
-		storage, err := postgres.NewPostgresStorage(cfg.Postgres.Host, cfg.Postgres.Port, cfg.Postgres.User, cfg.Postgres.Password, cfg.Postgres.DBName, cfg.Postgres.SSLMode)
-		if err != nil {
-			log.Error("failed to init storage", slog.Any("error", err))
-			os.Exit(1)
-		}
-		log.Info("Successfully connected to database")
-		_ = storage
+	storage, err := sqlite.NewSQLiteStorage(cfg.Sqlite.Path)
+	if err != nil {
+		log.Error("failed to init storage", slog.Any("error", err))
+		os.Exit(1)
+	}
+	log.Info("Successfully connected to database")
+	_ = storage
+	
 	// TODO: init router: chi, "chi render"
 
 	// TODO: init server
