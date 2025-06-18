@@ -13,6 +13,8 @@ import (
 // env-default:"dev" - Если в yaml нет параметра, установим по дефолту выбранный здесь.
 // env-required:"true" - Если поле не задано в yaml, крашим запуск приложения.
 
+const AliasMaxLength = 6
+
 type Config struct {
 	Env        string      `yaml:"env" env-default:"dev"`
 	Postgres   PostgresCfg `yaml:"postgres" env-required:"true"`
@@ -25,6 +27,8 @@ type HTTPServer struct {
 	Address     string        `yaml:"address" env-default:"localhost:8080"`
 	Timeout     time.Duration `yaml:"timeout" env-default:"4s"`
 	IdleTimeout time.Duration `yaml:"idle_timeout" env-default:"60s"`
+	User string `yaml:user env-required:"true"`
+	Password string `yaml:password env-required:"true" env:"HTTP_SERVER_PASSWORD"`
 }
 
 type SqliteCfg struct {
